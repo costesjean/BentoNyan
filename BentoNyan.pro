@@ -86,10 +86,12 @@ macx {
 
 SOURCES += \
         main.cpp \
-        bento.cpp
+        bento.cpp \
+    imageprocessor.cpp
 
 HEADERS += \
-        bento.h
+        bento.h \
+    imageprocessor.h
 
 FORMS += \
         bento.ui
