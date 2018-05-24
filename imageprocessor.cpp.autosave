@@ -13,8 +13,8 @@ vector<Scalar> computeAverage(Mat img){
     Scalar b = mean(channels[2]);
     
     vector<Scalar> averages;
-    averages.add(r);
-    averages.add(g);
-    averages.add(b);
+    averages.add(r[0]);
+    averages.add(g[0]);
+    averages.add(b[0]);
     return averages;
 }
