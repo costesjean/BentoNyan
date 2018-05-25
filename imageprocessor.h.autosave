@@ -14,6 +14,7 @@ private:
 public:
     ImageProcessor();
     vector<Scalar> computeAverage(Mat img);
+    vector<double> computeAverage(vector<Point> vect);
     vector<Point> segmentation(Mat img, double threshold);
     void setBackground(Mat frame);
 };

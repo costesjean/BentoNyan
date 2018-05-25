@@ -46,20 +46,6 @@ win32 {
 
     }
 }
-unix {
-    INCLUDEPATH +=$$(OPENCV_DIR)/include \
-                /root/opencv/include/ \
-
-    LIBS += -lGL
-    LIBS += -lGLU
-    #-L$$(OPENCV_DIR)/lib
-    LIBS += -L/root/opencv/lib \
-        -lopencv_core \
-        -lopencv_highgui \
-        -lopencv_imgproc \
-        -lopencv_features2d \
-        -lopencv_calib3d
-}
 macx {
     # The following define makes your compiler emit warnings if you use
     # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -82,6 +68,21 @@ macx {
         -lopencv_features2d \
         -lopencv_calib3d
 }
+#unix {
+#    INCLUDEPATH +=$$(OPENCV_DIR)/include \
+#                /root/opencv/include/ \
+
+#    LIBS += -lGL
+#    LIBS += -lGLU
+#    #-L$$(OPENCV_DIR)/lib
+#    LIBS += -L/root/opencv/lib \
+#        -lopencv_core \
+#        -lopencv_highgui \
+#        -lopencv_imgproc \
+#        -lopencv_features2d \
+#        -lopencv_calib3d
+#}
+
 
 
 SOURCES += \
