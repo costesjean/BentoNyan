@@ -65,6 +65,7 @@ Bento::Bento(QWidget *parent) :
 
 
     cap = VideoCapture(0);
+    //cap = VideoCapture(0);
     cout<<"width :"<<cap.get(CV_CAP_PROP_FRAME_WIDTH)<<endl;
     cout<<"height :"<<cap.get(CV_CAP_PROP_FRAME_HEIGHT)<<endl;
     cap.set(CV_CAP_PROP_FRAME_WIDTH,frameWidth);
@@ -75,9 +76,7 @@ Bento::Bento(QWidget *parent) :
     }
     // Get frame
     cap >> frame;
-    ip.setBackground(frame);
     // Init output window
-    namedWindow("WebCam",1);
 }
 void Bento::on_timeout(){
     frame = this->getmat();
