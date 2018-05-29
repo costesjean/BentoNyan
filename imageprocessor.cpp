@@ -27,13 +27,14 @@ vector<double> ImageProcessor::computeAverage(vector<Point> vect){
     double gavg = 0;
     double bavg = 0;
     for(int i = 0 ; i<vect.size(); i++){
-        ravg+=fond.at(vect.at(i).x, vect.at(i).y, 0);
-        gavg+=fond.at(vect.at(i).x, vect.at(i).y, 1);
-        bavg+=fond.at(vect.at(i).x, vect.at(i).y, 2);
+
+        ravg+=fond.at<double>(vect.at(i).x, vect.at(i).y, 0);
+        gavg+=fond.at<double>(vect.at(i).x, vect.at(i).y, 1);
+        bavg+=fond.at<double>(vect.at(i).x, vect.at(i).y, 2);
     }
-    ravg/=vect.size;
-    gavg/=vect.size;
-    bavg/=vect.size;
+    ravg/=vect.size();
+    gavg/=vect.size();
+    bavg/=vect.size();
     output.push_back(ravg);
     output.push_back(gavg);
     output.push_back(bavg);
@@ -48,10 +49,10 @@ vector<Point> ImageProcessor::segmentation(Mat img, double threshold){
     //Subbstraction
     Mat output;
     vector<Point> vect;
-    substract(img, fond, output);
+    subtract(img, fond, output);
     for (int i = 0; i < output.cols ; i++ ){
         for (int j = 0; j < output.rows ; j++ ){
-            if (output.at(i,j)>threshold){
+            if (output.at<double>(i,j)>threshold){
                 vect.push_back(Point(i,j));
             }
         }

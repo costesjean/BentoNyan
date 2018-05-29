@@ -25,6 +25,8 @@ Bento::Bento(QWidget *parent) :
     connect(&timer_, SIGNAL(timeout()),this, SLOT(on_timeout()));
     timer_.start(30);
     cap.open(0);
+    connect(&soundTimer_, SIGNAL(timeout()),this, SLOT(on_timeout1()));
+    soundTimer_.start(1000);
 
 
     //### Set up Interface ###
@@ -86,6 +88,10 @@ void Bento::on_timeout(){
     QImage resized = qframe.scaled(ui->camLabel->width(),ui->camLabel->height(),Qt::KeepAspectRatio);
     ui->camLabel->setPixmap(QPixmap::fromImage(resized));
     //ui->camLabel->resize(ui->camLabel->pixmap()->size());
+}
+
+void Bento::on_timeout1(){
+
 }
 
 Mat Bento::getmat(){

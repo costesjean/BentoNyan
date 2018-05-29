@@ -96,3 +96,6 @@ HEADERS += \
 
 FORMS += \
         bento.ui
+
+RESOURCES += \
+    sons.qrc
