@@ -34,10 +34,12 @@ Bento::Bento(QWidget *parent) :
     //Constantes
     //Width
     int win_width = 1200; // total
-    int camWidth = win_width/2; //camera
+    int camWidth = 3*win_width/4; //camera
+    int labelWidth = win_width/4;
 
     //Height
     int win_height = 900;
+    int camHeight = 11*win_height/12;
     int height_title = (int)(win_height/12);
     // Layout contraintes et taille
     this->setMinimumSize(win_width,win_height);
@@ -50,7 +52,16 @@ Bento::Bento(QWidget *parent) :
     ui->couleurJoueLayout->setSizeConstraint(QLayout::SetMinimumSize);
     ui->noteJouerLayout->setSizeConstraint(QLayout::SetMinimumSize);
 
-    ui->camLabel->setFixedSize(500,500);
+    ui->camLabel->setFixedSize(camWidth,camHeight);
+    ui->do_->setFixedWidth(labelWidth);
+    ui->re->setFixedWidth(labelWidth);
+    ui->mi->setFixedWidth(labelWidth);
+    ui->fa->setFixedWidth(labelWidth);
+    ui->sol->setFixedWidth(labelWidth);
+    ui->la->setFixedWidth(labelWidth);
+    ui->si->setFixedWidth(labelWidth);
+    ui->couleurAJouerLabel->setFixedWidth(labelWidth);
+    ui->couleurJoueeLabel->setFixedWidth(labelWidth);
 
 
 
@@ -61,9 +72,6 @@ Bento::Bento(QWidget *parent) :
     ui->appliName->setAlignment(Qt::AlignCenter);
     //Style
     ui->appliName->setStyleSheet("background-color: green");
-
-
-
 
     //cap = VideoCapture(0);
     cout<<"width :"<<cap.get(CV_CAP_PROP_FRAME_WIDTH)<<endl;
