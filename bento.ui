@@ -6,21 +6,132 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>581</width>
-    <height>371</height>
+    <width>632</width>
+    <height>651</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Bento</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>10</y>
-      <width>571</width>
-      <height>291</height>
+      <x>9</x>
+      <y>99</y>
+      <width>561</width>
+      <height>431</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="mainLayout">
+     <item>
+      <widget class="QLabel" name="camLabel">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="userInstruction">
+       <item>
+        <layout class="QHBoxLayout" name="couleurJoueLayout">
+         <item>
+          <widget class="QLabel" name="couleurJoueeLabel">
+           <property name="text">
+            <string>Couleur jouée :</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="noteJouerLayout">
+           <item>
+            <widget class="QLabel" name="do_">
+             <property name="text">
+              <string>Do</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="re">
+             <property name="text">
+              <string>Re</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="mi">
+             <property name="text">
+              <string>Mi</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="fa">
+             <property name="text">
+              <string>Fa</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="sol">
+             <property name="text">
+              <string>Sol</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="la">
+             <property name="text">
+              <string>La</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="si">
+             <property name="text">
+              <string>Si</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="couleurAJouerLayout">
+         <item>
+          <widget class="QLabel" name="couleurAJouerLabel">
+           <property name="text">
+            <string>Couleur à jouer : </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="jeuxLabel">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>0</y>
+      <width>581</width>
+      <height>80</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="titreLayout">
@@ -29,50 +140,22 @@
      </property>
      <item>
       <widget class="QLabel" name="appliName">
-       <property name="enabled">
-        <bool>true</bool>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="sizeIncrement">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:20pt; font-weight:600; font-style:italic; text-decoration: underline;&quot;&gt;BentoNyan&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>BentoNyan</string>
        </property>
       </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="camLabel">
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item>
-            <widget class="QLabel" name="couleurJoue">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; text-decoration: underline;&quot;&gt;Couleur jouée :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <widget class="QLabel" name="couleurAJoue">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; text-decoration: underline;&quot;&gt;Couleur à jouer :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-      </layout>
      </item>
     </layout>
    </widget>
@@ -82,7 +165,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>581</width>
+     <width>632</width>
      <height>25</height>
     </rect>
    </property>

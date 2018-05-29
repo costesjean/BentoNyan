@@ -30,17 +30,35 @@ Bento::Bento(QWidget *parent) :
     //### Set up Interface ###
 
     //Constantes
-    int win_width = 800;
-    int win_height = 600;
+    //Width
+    int win_width = 1200; // total
+    int camWidth = win_width/2; //camera
+
+    //Height
+    int win_height = 900;
     int height_title = (int)(win_height/12);
     // Layout contraintes et taille
     this->setMinimumSize(win_width,win_height);
-    ui->centralWidget->setMinimumSize(win_width,win_height);
-    ui->titreLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
-    ui->appliName->setMaximumSize(win_width,height_title);
+    this->centralWidget()->setMinimumSize(win_width,win_height);
+
+    ui->titreLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    ui->mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    ui->userInstruction->setSizeConstraint(QLayout::SetMinimumSize);
+    ui->couleurAJouerLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    ui->couleurJoueLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    ui->noteJouerLayout->setSizeConstraint(QLayout::SetMinimumSize);
+
+    ui->camLabel->setFixedSize(500,500);
+
+
+
+    ui->do_->setStyleSheet("background-color : red");
+
+    ui->appliName->setMinimumWidth(this->width());
+    ui->appliName->setFixedHeight(height_title);
     ui->appliName->setAlignment(Qt::AlignCenter);
     //Style
-    ui->appliName->setStyleSheet("color: red");
+    ui->appliName->setStyleSheet("background-color: green");
 
 
 
