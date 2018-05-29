@@ -64,7 +64,7 @@ Bento::Bento(QWidget *parent) :
 
 
 
-    cap = VideoCapture(0);
+
     //cap = VideoCapture(0);
     cout<<"width :"<<cap.get(CV_CAP_PROP_FRAME_WIDTH)<<endl;
     cout<<"height :"<<cap.get(CV_CAP_PROP_FRAME_HEIGHT)<<endl;
