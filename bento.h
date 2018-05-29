@@ -21,6 +21,8 @@ class Bento : public QMainWindow
 
 private slots:
         void on_timeout();
+        void on_timeout1();
+
 public:
     explicit Bento(QWidget *parent = 0);
     ~Bento();
@@ -32,6 +34,7 @@ private:
     Mat frame;
     VideoCapture cap;
     QTimer timer_;
+    QTimer soundTimer_;
     int frameWidth=320;
     int frameHeight=240;
     int subImageWidth=100;
