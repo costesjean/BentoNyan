@@ -1,6 +1,7 @@
 #include "bento.h"
 #include "ui_bento.h"
 #include "imageprocessor.h"
+#include  <QGraphicsDropShadowEffect>
 
 const unsigned int WIN_WIDTH  = 1600;
 const unsigned int WIN_HEIGHT = 900;
@@ -34,15 +35,15 @@ Bento::Bento(QWidget *parent) :
     //Constantes
     //Width
     int win_width = 1200; // total
-    int camWidth = 3*win_width/4; //camera
-    int labelWidth = win_width/4;
+    int camWidth = 2*win_width/3; //camera
+    int labelWidth = win_width/6;
 
     //Height
     int win_height = 900;
     int camHeight = 11*win_height/12;
     int height_title = (int)(win_height/12);
     // Layout contraintes et taille
-    this->setMinimumSize(win_width,win_height);
+    this->setFixedSize(win_width,win_height);
     this->centralWidget()->setMinimumSize(win_width,win_height);
 
     ui->titreLayout->setSizeConstraint(QLayout::SetMinimumSize);
@@ -53,27 +54,47 @@ Bento::Bento(QWidget *parent) :
     ui->noteJouerLayout->setSizeConstraint(QLayout::SetMinimumSize);
 
     ui->camLabel->setFixedSize(camWidth,camHeight);
-    ui->do_->setFixedWidth(labelWidth);
-    ui->re->setFixedWidth(labelWidth);
-    ui->mi->setFixedWidth(labelWidth);
-    ui->fa->setFixedWidth(labelWidth);
-    ui->sol->setFixedWidth(labelWidth);
-    ui->la->setFixedWidth(labelWidth);
-    ui->si->setFixedWidth(labelWidth);
+    ui->do_->setFixedWidth(labelWidth);ui->do_->setAlignment(Qt::AlignCenter);
+    ui->re->setFixedWidth(labelWidth);ui->re->setAlignment(Qt::AlignCenter);
+    ui->mi->setFixedWidth(labelWidth);ui->mi->setAlignment(Qt::AlignCenter);
+    ui->fa->setFixedWidth(labelWidth);ui->fa->setAlignment(Qt::AlignCenter);
+    ui->sol->setFixedWidth(labelWidth);ui->sol->setAlignment(Qt::AlignCenter);
+    ui->la->setFixedWidth(labelWidth);ui->la->setAlignment(Qt::AlignCenter);
+    ui->si->setFixedWidth(labelWidth);ui->si->setAlignment(Qt::AlignCenter);
     ui->couleurAJouerLabel->setFixedWidth(labelWidth);
     ui->couleurJoueeLabel->setFixedWidth(labelWidth);
-
-
-
-    ui->do_->setStyleSheet("background-color : red");
+    ui->couleurAJouerLabel->setAlignment(Qt::AlignCenter);
+    ui->couleurJoueeLabel->setAlignment(Qt::AlignCenter);
 
     ui->appliName->setMinimumWidth(this->width());
     ui->appliName->setFixedHeight(height_title);
     ui->appliName->setAlignment(Qt::AlignCenter);
-    //Style
-    ui->appliName->setStyleSheet("background-color: green");
 
-    //cap = VideoCapture(0);
+    // StyleSheet
+
+    QString styleTitle = "color : #00d1b7; font-style : italic ; text-decoration : underline ; font-weight : bold; font-family : Merriweather; font-size : 50px ;";
+    QString styleNote = "font-family : confortaa ; font-size : 20px ; ";
+    QString styleSubTitle = "text-decoration : underline ; font-family : confortaa ; font-size : 20px ;";
+
+    ui->couleurAJouerLabel->setStyleSheet(styleSubTitle);
+    ui->couleurJoueeLabel->setStyleSheet(styleSubTitle);
+
+    ui->re->setStyleSheet(styleNote);
+    ui->do_->setStyleSheet(styleNote);
+    ui->mi->setStyleSheet(styleNote);
+    ui->fa->setStyleSheet(styleNote);
+    ui->sol->setStyleSheet(styleNote);
+    ui->la->setStyleSheet(styleNote);
+    ui->si->setStyleSheet(styleNote);
+
+    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
+    effect->setBlurRadius(0);
+    effect->setColor(QColor("#92fff1"));
+    effect->setOffset(3,3);
+    ui->appliName->setGraphicsEffect(effect);
+    ui->appliName->setStyleSheet(styleTitle);
+
+
     cout<<"width :"<<cap.get(CV_CAP_PROP_FRAME_WIDTH)<<endl;
     cout<<"height :"<<cap.get(CV_CAP_PROP_FRAME_HEIGHT)<<endl;
     cap.set(CV_CAP_PROP_FRAME_WIDTH,frameWidth);
