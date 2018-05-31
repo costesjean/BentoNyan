@@ -1,4 +1,5 @@
 #include "imageprocessor.h"
+#include <iostream>
 
 using namespace cv;
 
@@ -46,17 +47,23 @@ void ImageProcessor::setBackground(Mat frame){
 }
 
 vector<Point> ImageProcessor::segmentation(Mat img, double threshold){
-    //Subbstraction
+    //Subtraction
     Mat output;
+    Mat grayOutput;
     vector<Point> vect;
-    subtract(img, fond, output);
-    for (int i = 0; i < output.cols ; i++ ){
-        for (int j = 0; j < output.rows ; j++ ){
-            if (output.at<double>(i,j)>threshold){
+    output = img - fond;
+    cvtColor(output,grayOutput, CV_BGR2GRAY);
+    for (int i = 0; i < grayOutput.rows ; i++ ){
+        for (int j = 0; j < grayOutput.cols ; j++ ){
+            if (grayOutput.at<int>(i,j)>threshold){
                 vect.push_back(Point(i,j));
+                cout<<Point(i,j)<<" ";
+                cout<<grayOutput.at<int>(Point(i,j))<<" ";
+                cout<<fond.at<int>(Point(i,j))<<endl;
             }
         }
     }
+
     return vect;
 }
 

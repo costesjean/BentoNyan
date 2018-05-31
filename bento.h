@@ -6,6 +6,7 @@
 #include <iostream>
 #include <QTimer>
 #include <QDesktopWidget>
+#include "imageprocessor.h"
 
 using namespace cv;
 using namespace std;
@@ -41,7 +42,7 @@ private:
     int subImageHeight=100;
     int templateWidth=25;
     int templateHeight=25;
-
+    ImageProcessor ip;
 };
 
 #endif // BENTO_H
