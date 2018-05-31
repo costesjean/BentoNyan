@@ -16,7 +16,6 @@ Bento::Bento(QWidget *parent) :
     //### Set up UI ###
 
     ui->setupUi(this);
-    ImageProcessor ip;
     // Reglage de la taille/position
     setFixedSize(WIN_WIDTH, WIN_HEIGHT);
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
@@ -119,7 +118,7 @@ void Bento::on_timeout(){
 }
 
 void Bento::on_timeout1(){
-
+    vector<double> channels = ip.computeAverage(ip.segmentation(frame,128.0));
 }
 
 Mat Bento::getmat(){
