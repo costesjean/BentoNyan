@@ -26,7 +26,10 @@ Bento::Bento(QWidget *parent) :
     timer_.start(30);
     cap.open(0);
     connect(&soundTimer_, SIGNAL(timeout()),this, SLOT(on_timeout1()));
-    soundTimer_.start(1000);
+    soundTimer_.start(100);
+
+    //### Reset Boutton ###
+    connect(ui->resetFond,SIGNAL(clicked()),this,SLOT(resetFond()));
 
 
     //### Set up Interface ###
@@ -38,9 +41,10 @@ Bento::Bento(QWidget *parent) :
     int labelWidth = win_width/6;
 
     //Height
-    int win_height = 900;
-    int camHeight = 11*win_height/12;
-    int height_title = (int)(win_height/12);
+
+    int camHeight = 900;
+    int height_title = 70;
+    int win_height = camHeight + height_title ;
     // Layout contraintes et taille
     this->setFixedSize(win_width,win_height);
     this->centralWidget()->setMinimumSize(win_width,win_height);
@@ -64,6 +68,7 @@ Bento::Bento(QWidget *parent) :
     ui->couleurJoueeLabel->setFixedWidth(labelWidth);
     ui->couleurAJouerLabel->setAlignment(Qt::AlignCenter);
     ui->couleurJoueeLabel->setAlignment(Qt::AlignCenter);
+   // ui->ImageFond->setFixedSize(50,50);
 
     ui->appliName->setMinimumWidth(this->width());
     ui->appliName->setFixedHeight(height_title);
@@ -105,14 +110,16 @@ Bento::Bento(QWidget *parent) :
     // Get frame
     cap.read(frame);
     cvtColor(frame, frame,CV_BGR2RGB);
+    cv::flip((frame),(frame),1);
     ip.setBackground(frame);
 
 }
 void Bento::on_timeout(){
     frame = this->getmat();
     cv::flip((frame),(frame),1);
-    Mat dest;
 
+    // CAMERA
+    Mat dest;
     cvtColor(frame, dest,CV_BGR2RGB);
     cvtColor(frame, frame2,CV_BGR2RGB);
     QImage qframe= QImage((uchar*) dest.data, dest.cols, dest.rows, dest.step, QImage::Format_RGB888);
@@ -120,14 +127,26 @@ void Bento::on_timeout(){
     ui->camLabel->setPixmap(QPixmap::fromImage(resized));
     //ui->camLabel->resize(ui->camLabel->pixmap()->size());
 
-    Mat destFond = ip.getFond();
+    // FOND
+   // Mat destFond = ip.getFond();
+    Mat destFond = ip.getFond() - dest;
     QImage qframeFond= QImage((uchar*) destFond.data, destFond.cols, destFond.rows, destFond.step, QImage::Format_RGB888);
     QImage resizedFond = qframeFond.scaled(ui->ImageFond->width(),ui->ImageFond->height(),Qt::KeepAspectRatio);
     ui->ImageFond->setPixmap(QPixmap::fromImage(resizedFond));
 }
 
 void Bento::on_timeout1(){
-    vector<double> channels = ip.computeAverage(ip.segmentation(frame2,128.0));
+    vector<double> channels = ip.computeAverage(ip.segmentation(frame2,40.0));
+    cout << channels[0] << " "<< channels[1]<< " "<< channels[2]<<endl;
+
+}
+
+void Bento::resetFond(){
+    Mat fond = this->getmat();
+    Mat dest;
+    cvtColor(fond, dest,CV_BGR2RGB);
+    cv::flip((dest),(dest),1);
+    ip.setBackground(dest);
 }
 
 Mat Bento::getmat(){
@@ -147,4 +166,28 @@ Mat Bento::getmat(){
 Bento::~Bento()
 {
     delete ui;
+}
+
+int Bento::calculCouleur(vector<double> vect){
+    /*if (){ // Red
+
+    }
+    else if(){ // Green
+
+    }
+    else if(){ // Blue
+
+    }
+    else if(){ // Magenta
+
+    }
+    else if(){ // Cyan
+
+    }
+    else if(){// Yellow
+
+    }
+    else if(){ // White
+
+    }*/
 }

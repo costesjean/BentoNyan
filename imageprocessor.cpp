@@ -27,22 +27,24 @@ vector<double> ImageProcessor::computeAverage(vector<Point> vect){
     double ravg = 0;
     double gavg = 0;
     double bavg = 0;
-    for(int i = 0 ; i<vect.size(); i++){
-    //cout << fond.at<double>(vect[i])<<endl ;
-        //string ty =  type2str( fond.type() );
-        //cout << ty << endl;
-        //Vec3f vect3d =  fond.at<Vec3f>(vect.at(i).x,vect.at(i).y);
-        int R = (int)(fond.at<Vec3b>(vect.at(i).x,vect.at(i).y)[0]);
-        int G  = (int)(fond.at<Vec3b>(vect.at(i).x,vect.at(i).y)[1]);
-        int B = (int)(fond.at<Vec3b>(vect.at(i).x,vect.at(i).y)[2]);
-       // cout << R << " "<< G<< " " <<B<<endl;
-        ravg+=R;
-        gavg+=G;
-        bavg+=B;
+    if(vect.size()>1000){
+        for(int i = 0 ; i<vect.size(); i++){
+        //cout << fond.at<double>(vect[i])<<endl ;
+            //string ty =  type2str( fond.type() );
+            //cout << ty << endl;
+            //Vec3f vect3d =  fond.at<Vec3f>(vect.at(i).x,vect.at(i).y);
+            int R = (int)(fond.at<Vec3b>(vect.at(i).x,vect.at(i).y)[0]);
+            int G  = (int)(fond.at<Vec3b>(vect.at(i).x,vect.at(i).y)[1]);
+            int B = (int)(fond.at<Vec3b>(vect.at(i).x,vect.at(i).y)[2]);
+           // cout << R << " "<< G<< " " <<B<<endl;
+            ravg+=R;
+            gavg+=G;
+            bavg+=B;
+        }
+        ravg/=vect.size();
+        gavg/=vect.size();
+        bavg/=vect.size();
     }
-    ravg/=vect.size();
-    gavg/=vect.size();
-    bavg/=vect.size();
     output.push_back(ravg);
     output.push_back(gavg);
     output.push_back(bavg);
@@ -58,16 +60,15 @@ vector<Point> ImageProcessor::segmentation(Mat img, double threshold){
     Mat output;
     Mat grayOutput;
     vector<Point> vect;
-    output = img - fond;
-
-    cvtColor(output,grayOutput, CV_RGB2GRAY);
+    absdiff(img, fond, output);
+    //cvtColor(output,grayOutput, CV_RGB2GRAY);
     for (int i = 0; i < output.rows ; i++ ){
         for (int j = 0; j < output.cols ; j++ ){
-            int R = (int)(fond.at<Vec3b>(i,j)[0]);
-            int G  = (int)(fond.at<Vec3b>(i,j)[1]);
-            int B = (int)(fond.at<Vec3b>(i,j)[2]);
+            int R = (int)(output.at<Vec3b>(i,j)[0]);
+            int G  = (int)(output.at<Vec3b>(i,j)[1]);
+            int B = (int)(output.at<Vec3b>(i,j)[2]);
             //cout << R << " "<< G<< " " <<B<<endl;
-            if (output.at<int>(i,j)>threshold){
+            if ((R>threshold) || (G>threshold) || (B>threshold)){
                 vect.push_back(Point(i,j));
                 //cout<<Point(i,j)<<" ";
                 //cout<<output.at<int>(Point(i,j))<<" ";

@@ -122,6 +122,13 @@
         </layout>
        </item>
        <item>
+        <widget class="QPushButton" name="resetFond">
+         <property name="text">
+          <string>Reset Fond</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="ImageFond">
          <property name="text">
           <string>TextLabel</string>

@@ -23,11 +23,13 @@ class Bento : public QMainWindow
 private slots:
         void on_timeout();
         void on_timeout1();
+        void resetFond();
 
 public:
     explicit Bento(QWidget *parent = 0);
     ~Bento();
     Mat getmat();
+    int calculCouleur(vector<double> vect);
 
 
 private:
