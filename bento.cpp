@@ -103,19 +103,27 @@ Bento::Bento(QWidget *parent) :
         cerr<<"Error openning the default camera"<<endl;
     }
     // Get frame
-    cap >> frame;
-    // Init output window
+    cap.read(frame);
+    cvtColor(frame, frame,CV_BGR2RGB);
+    ip.setBackground(frame);
+
 }
 void Bento::on_timeout(){
     frame = this->getmat();
     cv::flip((frame),(frame),1);
     Mat dest;
+
     cvtColor(frame, dest,CV_BGR2RGB);
     cvtColor(frame, frame2,CV_BGR2RGB);
     QImage qframe= QImage((uchar*) dest.data, dest.cols, dest.rows, dest.step, QImage::Format_RGB888);
     QImage resized = qframe.scaled(ui->camLabel->width(),ui->camLabel->height(),Qt::KeepAspectRatio);
     ui->camLabel->setPixmap(QPixmap::fromImage(resized));
     //ui->camLabel->resize(ui->camLabel->pixmap()->size());
+
+    Mat destFond = ip.getFond();
+    QImage qframeFond= QImage((uchar*) destFond.data, destFond.cols, destFond.rows, destFond.step, QImage::Format_RGB888);
+    QImage resizedFond = qframeFond.scaled(ui->ImageFond->width(),ui->ImageFond->height(),Qt::KeepAspectRatio);
+    ui->ImageFond->setPixmap(QPixmap::fromImage(resizedFond));
 }
 
 void Bento::on_timeout1(){
@@ -128,7 +136,7 @@ Mat Bento::getmat(){
     if(cap.isOpened())  // check if we succeeded
     {
         //Lecture
-        cap >> m; // get a new frame from camera
+        cap.read(m); // get a new frame from camera
     }
     else{
         cerr<<"Error openning the default camera"<<endl;
