@@ -33,6 +33,7 @@ public:
 private:
     Ui::Bento *ui;
     Mat frame;
+    Mat frame2;
     VideoCapture cap;
     QTimer timer_;
     QTimer soundTimer_;
