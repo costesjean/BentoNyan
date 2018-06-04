@@ -52,14 +52,14 @@ vector<Point> ImageProcessor::segmentation(Mat img, double threshold){
     Mat grayOutput;
     vector<Point> vect;
     output = img - fond;
-    cvtColor(output,grayOutput, CV_BGR2GRAY);
+    cvtColor(output,grayOutput, CV_RGB2GRAY);
     for (int i = 0; i < grayOutput.rows ; i++ ){
         for (int j = 0; j < grayOutput.cols ; j++ ){
             if (grayOutput.at<int>(i,j)>threshold){
                 vect.push_back(Point(i,j));
                 cout<<Point(i,j)<<" ";
                 cout<<grayOutput.at<int>(Point(i,j))<<" ";
-                cout<<fond.at<int>(Point(i,j))<<endl;
+  //              cout<<fond.at<int>(Point(i,j))<<endl;
             }
         }
     }

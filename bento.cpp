@@ -111,6 +111,7 @@ void Bento::on_timeout(){
     cv::flip((frame),(frame),1);
     Mat dest;
     cvtColor(frame, dest,CV_BGR2RGB);
+    cvtColor(frame, frame2,CV_BGR2RGB);
     QImage qframe= QImage((uchar*) dest.data, dest.cols, dest.rows, dest.step, QImage::Format_RGB888);
     QImage resized = qframe.scaled(ui->camLabel->width(),ui->camLabel->height(),Qt::KeepAspectRatio);
     ui->camLabel->setPixmap(QPixmap::fromImage(resized));
@@ -118,7 +119,7 @@ void Bento::on_timeout(){
 }
 
 void Bento::on_timeout1(){
-    vector<double> channels = ip.computeAverage(ip.segmentation(frame,128.0));
+    vector<double> channels = ip.computeAverage(ip.segmentation(frame2,128.0));
 }
 
 Mat Bento::getmat(){
