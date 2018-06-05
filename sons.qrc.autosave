@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/sons">
+        <file>Sons/a1.wav</file>
+        <file>Sons/b1.wav</file>
+        <file>Sons/c1.wav</file>
+        <file>Sons/d1.wav</file>
+        <file>Sons/e1.wav</file>
+        <file>Sons/f1.wav</file>
+        <file>Sons/g1.wav</file>
+    </qresource>
+</RCC>

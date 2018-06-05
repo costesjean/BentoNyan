@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QDesktopWidget>
 #include "imageprocessor.h"
+#include <QSound>
 
 using namespace cv;
 using namespace std;
@@ -24,6 +25,7 @@ private slots:
         void on_timeout();
         void on_timeout1();
         void resetFond();
+        void play_sound(int id);
 
 public:
     explicit Bento(QWidget *parent = 0);
@@ -48,6 +50,8 @@ private:
     int templateWidth=25;
     int templateHeight=25;
     ImageProcessor ip;
+    QSound *son;
+    std::vector<QSound*> playlist;
 };
 
 #endif // BENTO_H
