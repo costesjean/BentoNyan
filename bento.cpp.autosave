@@ -151,7 +151,6 @@ void Bento::on_timeout1(){
     vector<double> channels = ip.computeAverage(ip.segmentation(frame,40.0));
     cout << channels[0] << " "<< channels[1]<< " "<< channels[2]<<endl;
     playlist[2]->play();
-    play_sound(2);
 }
 
 void Bento::play_sound(int id){
