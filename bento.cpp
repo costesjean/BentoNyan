@@ -137,7 +137,8 @@ void Bento::on_timeout1(){
     vector<double> channels = ip.computeAverage(ip.segmentation(frame,40.0));
     cout << channels[0] << " "<< channels[1]<< " "<< channels[2]<<endl;
     double hue = this->calculHue(channels[0],channels[1],channels[2]);
-    cout<<hue<<endl;
+    cout<< hue<<endl;
+    int couleur = this->calculCouleur(hue);
     //
 }
 
@@ -156,13 +157,13 @@ Mat Bento::getmat(){
         cap.read(m);
         cvtColor(m, dest,CV_BGR2RGB);
         cv::flip((dest),(dest),1);
-        dest2 = this->equalization(dest);
+       // dest2 = this->equalization(dest);
     // get a new frame from camera
     }
     else{
         cerr<<"Error openning the default camera"<<endl;
     }
-    return dest2;
+    return dest;
 }
 
 Bento::~Bento()
@@ -170,29 +171,37 @@ Bento::~Bento()
     delete ui;
 }
 
-int Bento::calculCouleur(vector<double> vect){
-    /*if (){ // Red
-
+int Bento::calculCouleur(double hue){
+    if (hue<30 || hue >330 ){ // Red
+         cout << "Red"<<endl;
+        return 5;
     }
-    else if(){ // Green
-
+    else if(30<=hue && hue<90){ // Yellow
+         cout<< "Yellow"<<endl;
+        return 4;
     }
-    else if(){ // Blue
-
+    else if(90<=hue && hue<150){ // Green
+        cout<<"Green"<<endl;
+        return 3;
     }
-    else if(){ // Magenta
-
+    else if(150<=hue && hue<210){ // Cyan
+        cout << "Cyan"<<endl;
+        return 2;
     }
-    else if(){ // Cyan
-
+    else if(210<=hue && hue<270){ // Blue
+        cout << "Bleu"<<endl;
+        return 1;
     }
-    else if(){// Yellow
-
+    else if(270<=hue && hue<330){ // Magenta
+        cout << "Magenta"<<endl;
+        return 6;
     }
-    else if(){ // White
-
-    }*/
+    else{
+        cout<<"couleur non identifiée"<<endl;
+        return 0;
+    }
 }
+
 Mat Bento::equalization( Mat inputImage)
 {
     if(inputImage.channels() >= 3)
@@ -230,7 +239,11 @@ Mat Bento::equalization( Mat inputImage)
     return Mat();
 }
 
-double Bento::calculHue(double R, double G, double B){
+double Bento::calculHue(double R_, double G_, double B_){
+    double R = R_/255;
+    double G = G_/255;
+    double B = B_/255;
+    //double G = G/
     double hue, min, max;
     if (R>G && R>B){ // max R
         max = R;

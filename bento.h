@@ -29,7 +29,7 @@ public:
     explicit Bento(QWidget *parent = 0);
     ~Bento();
     Mat getmat();
-    int calculCouleur(vector<double> vect);
+    int calculCouleur(double hue);
     Mat equalization( Mat inputImage);
     double calculHue(double R, double G, double B);
 
