@@ -52,6 +52,7 @@ vector<double> ImageProcessor::computeAverage(vector<Point> vect){
 }
 
 void ImageProcessor::setBackground(Mat frame){
+    //Mat frame_ = this->equalization(frame);
     fond = frame;
 }
 
@@ -102,5 +103,41 @@ string ImageProcessor::type2str(int type) {
   return r;
 }
 
+Mat ImageProcessor::equalization( Mat inputImage)
+{
+    if(inputImage.channels() >= 3)
+    {
+        vector<Mat> channels;
+        split(inputImage,channels);
+        Mat B,G,R;
+        equalizeHist( channels[0], B );
+        equalizeHist( channels[1], G );
+        equalizeHist( channels[2], R );
+        vector<Mat> combined;
+        combined.push_back(B);
+        combined.push_back(G);
+        combined.push_back(R);
+        Mat result;
+        merge(combined,result);
+
+        Mat ycr ;
+        cvtColor(inputImage,ycr,CV_RGB2YCrCb);
+        vector<Mat> channels2;
+        split(ycr,channels2);
+        Mat Y;
+        equalizeHist( channels2[0], Y );
+        vector<Mat> combined2;
+        combined2.push_back(Y);
+        combined2.push_back(channels2[1]);
+        combined2.push_back(channels2[2]);
+        Mat result2;
+        merge(combined2,result2);
+        Mat final;
+        cvtColor(result2,final,CV_YCrCb2RGB);
+        return final;
+        //return result;
+    }
+    return Mat();
+}
 
 

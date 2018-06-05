@@ -19,6 +19,7 @@ public:
     vector<Point> segmentation(Mat img, double threshold);
     void setBackground(Mat frame);
     string type2str(int type);
+       Mat equalization(Mat inputFrame);
 };
 
 #endif // IMAGEPROCESSOR_H

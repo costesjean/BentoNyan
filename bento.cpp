@@ -108,20 +108,14 @@ Bento::Bento(QWidget *parent) :
         cerr<<"Error openning the default camera"<<endl;
     }
     // Get frame
-    cap.read(frame);
-    cvtColor(frame, frame,CV_BGR2RGB);
-    cv::flip((frame),(frame),1);
+    frame = this->getmat();
     ip.setBackground(frame);
 
 }
 void Bento::on_timeout(){
     frame = this->getmat();
-    cv::flip((frame),(frame),1);
-
     // CAMERA
-    Mat dest;
-    cvtColor(frame, dest,CV_BGR2RGB);
-    cvtColor(frame, frame2,CV_BGR2RGB);
+    Mat dest = frame;
     QImage qframe= QImage((uchar*) dest.data, dest.cols, dest.rows, dest.step, QImage::Format_RGB888);
     QImage resized = qframe.scaled(ui->camLabel->width(),ui->camLabel->height(),Qt::KeepAspectRatio);
     ui->camLabel->setPixmap(QPixmap::fromImage(resized));
@@ -129,38 +123,43 @@ void Bento::on_timeout(){
 
     // FOND
    // Mat destFond = ip.getFond();
-    Mat destFond = ip.getFond() - dest;
+   Mat destFond = ip.getFond() - dest;
+   //Mat destFond;
+   // cvtColor(dest,destFond,CV_BGR2YCrCb);
+
     QImage qframeFond= QImage((uchar*) destFond.data, destFond.cols, destFond.rows, destFond.step, QImage::Format_RGB888);
     QImage resizedFond = qframeFond.scaled(ui->ImageFond->width(),ui->ImageFond->height(),Qt::KeepAspectRatio);
     ui->ImageFond->setPixmap(QPixmap::fromImage(resizedFond));
 }
 
 void Bento::on_timeout1(){
-    vector<double> channels = ip.computeAverage(ip.segmentation(frame2,40.0));
+    vector<double> channels = ip.computeAverage(ip.segmentation(frame,40.0));
     cout << channels[0] << " "<< channels[1]<< " "<< channels[2]<<endl;
 
 }
 
 void Bento::resetFond(){
     Mat fond = this->getmat();
-    Mat dest;
-    cvtColor(fond, dest,CV_BGR2RGB);
-    cv::flip((dest),(dest),1);
-    ip.setBackground(dest);
+
+    ip.setBackground(fond);
 }
 
 Mat Bento::getmat(){
-    Mat m;
+    Mat m,dest,dest2;
 
     if(cap.isOpened())  // check if we succeeded
     {
         //Lecture
-        cap.read(m); // get a new frame from camera
+        cap.read(m);
+        cvtColor(m, dest,CV_BGR2RGB);
+        cv::flip((dest),(dest),1);
+        dest2 = this->equalization(dest);
+    // get a new frame from camera
     }
     else{
         cerr<<"Error openning the default camera"<<endl;
     }
-    return m;
+    return dest;
 }
 
 Bento::~Bento()
@@ -190,4 +189,40 @@ int Bento::calculCouleur(vector<double> vect){
     else if(){ // White
 
     }*/
+}
+Mat Bento::equalization( Mat inputImage)
+{
+    if(inputImage.channels() >= 3)
+    {
+        vector<Mat> channels;
+        split(inputImage,channels);
+        Mat B,G,R;
+        equalizeHist( channels[0], B );
+        equalizeHist( channels[1], G );
+        equalizeHist( channels[2], R );
+        vector<Mat> combined;
+        combined.push_back(B);
+        combined.push_back(G);
+        combined.push_back(R);
+        Mat result;
+        merge(combined,result);
+
+        Mat ycr ;
+        cvtColor(inputImage,ycr,CV_RGB2YCrCb);
+        vector<Mat> channels2;
+        split(ycr,channels2);
+        Mat Y;
+        equalizeHist( channels2[0], Y );
+        vector<Mat> combined2;
+        combined2.push_back(Y);
+        combined2.push_back(channels2[1]);
+        combined2.push_back(channels2[2]);
+        Mat result2;
+        merge(combined2,result2);
+        Mat final;
+        cvtColor(result2,final,CV_YCrCb2RGB);
+        return final;
+        //return result;
+    }
+    return Mat();
 }

@@ -30,6 +30,7 @@ public:
     ~Bento();
     Mat getmat();
     int calculCouleur(vector<double> vect);
+    Mat equalization( Mat inputImage);
 
 
 private:
