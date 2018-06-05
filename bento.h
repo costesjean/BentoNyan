@@ -8,6 +8,7 @@
 #include <QDesktopWidget>
 #include "imageprocessor.h"
 #include <QSound>
+#include <time.h>
 
 using namespace cv;
 using namespace std;
@@ -52,6 +53,8 @@ private:
     ImageProcessor ip;
     QSound *son;
     std::vector<QSound*> playlist;
+    time_t playTime;
+    int soundPlayed;
 };
 
 #endif // BENTO_H

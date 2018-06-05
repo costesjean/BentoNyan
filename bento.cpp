@@ -4,6 +4,7 @@
 #include "math.h"
 #include  <QGraphicsDropShadowEffect>
 
+
 const unsigned int WIN_WIDTH  = 1600;
 const unsigned int WIN_HEIGHT = 900;
 const float MAX_DIMENSION     = 50.0f;
@@ -127,7 +128,10 @@ Bento::Bento(QWidget *parent) :
     frame = this->getmat();
     ip.setBackground(frame);
 
+    soundPlayed = 0;
+    //timePlayed = time(NULL);
 }
+
 void Bento::on_timeout(){
     frame = this->getmat();
     // CAMERA
@@ -154,13 +158,18 @@ void Bento::on_timeout1(){
     double hue = this->calculHue(channels[0],channels[1],channels[2]);
     cout<< hue<<endl;
     int couleur = this->calculCouleur(hue);
-    //
-    playlist[2]->play();
-    play_sound(2);
+  //  time_t curtime = time(NULL);
+
+    play_sound(couleur);
 }
 
 void Bento::play_sound(int id){
-    playlist[id]->play();
+    if (id!=7){
+        if (playlist[soundPlayed]->isFinished()){
+            soundPlayed = id;
+            playlist[id]->play();
+        }
+    }
 }
 
 void Bento::resetFond(){
@@ -193,6 +202,9 @@ Bento::~Bento()
 }
 
 int Bento::calculCouleur(double hue){
+    if (hue == 999) {
+        return 7; // Aucun mouvement
+    }
     if (hue<30 || hue >330 ){ // Red
          cout << "Red"<<endl;
         return 5;
@@ -219,7 +231,7 @@ int Bento::calculCouleur(double hue){
     }
     else{
         cout<<"couleur non identifiée"<<endl;
-        return 0;
+        return 7;
     }
 }
 
@@ -266,6 +278,9 @@ double Bento::calculHue(double R_, double G_, double B_){
     double B = B_/255;
     //double G = G/
     double hue, min, max;
+    if (R_==0 && G == 0 && B ==0){
+        return 999;
+    }
     if (R>G && R>B){ // max R
         max = R;
         if (G<B){
