@@ -31,6 +31,7 @@ public:
     Mat getmat();
     int calculCouleur(vector<double> vect);
     Mat equalization( Mat inputImage);
+    double calculHue(double R, double G, double B);
 
 
 private:

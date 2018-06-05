@@ -1,6 +1,7 @@
 #include "bento.h"
 #include "ui_bento.h"
 #include "imageprocessor.h"
+#include "math.h"
 #include  <QGraphicsDropShadowEffect>
 
 const unsigned int WIN_WIDTH  = 1600;
@@ -135,7 +136,9 @@ void Bento::on_timeout(){
 void Bento::on_timeout1(){
     vector<double> channels = ip.computeAverage(ip.segmentation(frame,40.0));
     cout << channels[0] << " "<< channels[1]<< " "<< channels[2]<<endl;
-
+    double hue = this->calculHue(channels[0],channels[1],channels[2]);
+    cout<<hue<<endl;
+    //
 }
 
 void Bento::resetFond(){
@@ -159,7 +162,7 @@ Mat Bento::getmat(){
     else{
         cerr<<"Error openning the default camera"<<endl;
     }
-    return dest;
+    return dest2;
 }
 
 Bento::~Bento()
@@ -208,21 +211,59 @@ Mat Bento::equalization( Mat inputImage)
         merge(combined,result);
 
         Mat ycr ;
-        cvtColor(inputImage,ycr,CV_RGB2YCrCb);
+        cvtColor(inputImage,ycr,CV_RGB2Lab);
         vector<Mat> channels2;
         split(ycr,channels2);
-        Mat Y;
-        equalizeHist( channels2[0], Y );
+        Mat L;
+        equalizeHist( channels2[0], L );
         vector<Mat> combined2;
-        combined2.push_back(Y);
+        combined2.push_back(L);
         combined2.push_back(channels2[1]);
         combined2.push_back(channels2[2]);
         Mat result2;
         merge(combined2,result2);
         Mat final;
-        cvtColor(result2,final,CV_YCrCb2RGB);
+        cvtColor(result2,final,CV_Lab2RGB);
         return final;
         //return result;
     }
     return Mat();
+}
+
+double Bento::calculHue(double R, double G, double B){
+    double hue, min, max;
+    if (R>G && R>B){ // max R
+        max = R;
+        if (G<B){
+             min = G;
+        }
+        else{
+            min = B;
+         }
+         hue = (G-B)/(max-min);
+    }
+    else if(G>R && G>B){ // max G
+        if (R<B){
+            min = R;
+        }
+        else{
+            min = B;
+        }
+        hue = 2.0 + (B-R)/(max-min);
+    }
+    else{ // Max B
+        max = B;
+        if(R<G){
+            min = R;
+        }
+        else{
+            min = G;
+        }
+        hue = 4.0 + (R-G)/(max-min);
+    }
+    hue = hue *60;
+    if (hue<0){
+        hue +=360;
+    }
+    return hue;
 }
